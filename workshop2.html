@@ -1,11 +1,18 @@
 <!DOCTYPE HTML>
 <html lang="en">
+
 	<head>
 		<meta charset="UTF-8">
 		<title>Workshop 2</title>
 		<link rel="stylesheet" href="css/styles.css">
+
+
+		
 	</head>
 	<body>
+		
+		
+
 		<h1>Workshop 2: JavaScript BOM</h1>
 		<hr />
 		<p>In this exercise we will practice the use of BOM. Use the lecture-material as a reference guide side by side these exercises. It might also 
@@ -41,6 +48,59 @@
 		</pre>
 		<script>
             <!-- JavaScript goes here -->
+
+
+			function isAStudent() {
+
+
+				if (confirm("Are you a student?") == true) {
+					document.write("<br><br><br><br><br><big>Welcome student</big><br><br><br><br><br>");
+
+				} else {
+					document.write("<br><br><br><br><br><big>Sorry, this page is for students only</big><br><br><br><br><br>");
+				}
+			}
+
+			function repeatingText() {
+				var tally = 0;
+  				for (i=0; i < 50; i++) {
+					tally = i+1;
+    				document.write("This is a line of text: "+tally+".<br>");
+  				}
+			}	
+			
+			function checkIfMozilla() {
+				let userAgent = navigator.userAgent;
+        		let browserName;
+         
+         		if(userAgent.match(/firefox|fxios/i)){
+             		browserName = "Firefox";
+					window.open("https://www.mozilla.org", "_blank");
+           		}else{
+					window.open("https://www.iltalehti.fi", "_blank");
+				}
+			}
+
+			var images =[
+				"http://farm4.staticflickr.com/3691/11268502654_f28f05966c_m.jpg", 
+				"http://farm1.staticflickr.com/33/45336904_1aef569b30_n.jpg", 
+				"http://farm6.staticflickr.com/5211/5384592886_80a512e2c9.jpg"
+			];
+			
+			function displayImage() {
+				var num = Math.floor(Math.random() * images.length);
+				document.write('<img src="' + images[num] + '">');
+			}
+			
+
+			isAStudent();
+			document.write("&rdquo;<i><b>If I had nine hours to chop down a tree, I'd spend the first six sharpening my ax.</b></i>&rdquo;<br>");
+			document.write("-- <i>Abraham Lincoln</i><br><br>");
+			repeatingText();
+			checkIfMozilla();
+			displayImage();
+
+			
 		</script>
 	</body>
 </html>
