@@ -1,12 +1,12 @@
 <!doctype html>
 <HTML lang="en">
 	<head>
-		<title>Workshop 4</title>
+		<title id="pagetitle">Workshop 4</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
-	<body class="ws4">
-		<h1>Workshop 4: DOM Scripting</h1>
+	<body id="workshop4" class="ws4">
+		<h1 id="firsttitle">Workshop 4: DOM Scripting</h1>
 		<hr />
 		<p>In this exercise we will practice the art of DOM Scripting with JavaScript. Use the lecture-material as a reference guide side by side these exercises. It might also be a good idea to save the lines of code you write during the exercises for later use. </p>
 
@@ -15,8 +15,8 @@
 		<p>&nbsp;Below you will see three buttons. Edit the source code and add an onClick-events to these buttons. Use Developer Console to find the </p>
 		<p>
 		  <button onclick="changeHeading();">Button 1</button>
-		  <button onclick="secondButton">Button 2</button>
-		  <button onclick="">Button 3</button>
+		  <button onclick="secondButton()">Button 2</button>
+		  <button onclick="thirdButton()">Button 3</button>
 		</p>
 
 		<ul>
@@ -27,8 +27,8 @@
 			<strong id="lorem"><em>&quot;Lorem ipsum</em></strong><em> dolor sit amet, consectetuer   adipiscing elit. Sed posuere interdum sem. Quisque ligula eros   ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam   vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget   velit. &quot;</em></li>
 		</ul>
 		<hr/>
-		<h2>Exercise 2: DOM Traversing using ID's and classes</h2>
-		<p class="surprise">Add onchange -events to following checkboxes.</p>
+		<h2 id="ex2">Exercise 2: DOM Traversing using ID's and classes</h2>
+		<p id="button3" class="surprise">Add onchange -events to following checkboxes.</p>
 		<p>
 			<label>
 				<input onchange="hide()" name="CheckboxGroup1" type="checkbox" id="CheckboxGroup1_0" title="Actions" value="1">
@@ -60,7 +60,7 @@
 				<li>When you have accomplished the above, change the image (id=&quot;carimage&quot;) below based on the users choice on the pulldown menu below. Find appropriate images from the web.
 			</ul>
 		  <p>Select a new car from the list.</p>
-		  <select name="mySelect" id="mySelect" onchange="">
+		  <select name="mySelect" id="mySelect" onchange="pageAlert(value)">
 			<option value="BMW">BMW         
 			<option value="Audi">Audi
 			<option value="Mercedes">Mercedes
@@ -68,7 +68,7 @@
 		  </select>
 		  <br>
 		  <br>
-		<img alt="" onmouseover="" onmouseout="" style="left: 0px; opacity: 1;" src="http://cdn.bmwblog.com/wp-content/uploads/2015/11/BMW-2-Series-Gran-Coupe-Rendering.jpg" width="400" id="carimage"/>
+		<img id="carimage" alt="" onmouseover="addBorder()" onmouseout="removeBorder()" style="left: 0px; opacity: 1;" src="https://www.bmw.fi/content/dam/bmw/marketNORDICS/common/Campaigns/2020/Varfor-BMW/BMW_Stage_teaser_8_Series_Gran_Coupe_v2_1680x756.jpg/jcr:content/renditions/cq5dam.resized.img.1680.large.time1624890133465.jpg" width="400" id="carimage"/>
 		<hr/>
 		<h2>Exercise 4: Moving things around</h2>
 		<ul>
@@ -77,7 +77,7 @@
 			<ol>
 			  <li><button onclick="changePosition()">Move!</button>Select the div with an id &quot;carimage&quot; and move it 200px left and 500px down</li>
 			  <li><button onclick="setInterval(function(){doMove();},1000); ">Animate</button> Write a  funtion doMove() which  will move the image across the screen, or even better: back and forth on  the screen. The Interval required has already been added to the onclick -event of the list item.</li>
-			  <li><button onclick="setInterval(function(){fadeOut();},250);">Fade out!</button> Wite  a function fadeOut() which will slowly decrease the opacity of the image from 1.0 to  0 making it fade out. The Interval required has already been added to the onclick -event of the list item</li>
+			  <li><button onclick="setInterval(function(){fadeOut();},25);">Fade out!</button> Wite  a function fadeOut() which will slowly decrease the opacity of the image from 1.0 to  0 making it fade out. The Interval required has already been added to the onclick -event of the list item</li>
 			  <li><button onclick="remove()">Disappear! </button>Finally, write JavaScript which will remove the image from the page</li>
 			</ol>
 		  </li>
@@ -148,6 +148,124 @@
 			</li>
 			<li dir="ltr">How would you replace the contents only on the ones with the word &lsquo;Select&rsquo; in them?</li>
 		</ul>
+
+		<script>
+			function changeHeading() {
+				document.getElementById("pagetitle").innerHTML = "Modified Heading!";
+				document.getElementById("firsttitle").innerHTML = "Modified Heading!: DOM Scripting";
+			}
+
+			function secondButton() {
+				document.getElementById("ex2").style.background = "#F1F1F1";
+				document.getElementById("ex2").style.fontSize = "30px";
+				document.getElementById("ex2").style.fontStyle = "Italic";
+			}
+
+			function thirdButton() {
+				document.getElementById("button3").innerHTML += "<strong><em>&quot;Lorem ipsum</em></strong><em> dolor sit amet, consectetuer   adipiscing elit. Sed posuere interdum sem. Quisque ligula eros   ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam   vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget   velit. &quot;</em><img src=\"https://media.pitchfork.com/photos/61e8e52473b31e38e0eb1431/master/pass/Ghost_Impera_12x12.jpg\" width=\"300px\" height=\"300px\">";;			
+				document.getElementById("workshop4").style.background = "#F1F1F1";
+			}
+
+			document.getElementById("CheckboxGroup1_0").onclick = function(){hideMe()};
+			document.getElementById("CheckboxGroup1_1").onclick = function(){showMe()};
+			document.getElementById("CheckboxGroup1_2").onclick = function(){surpriseMe()};
+
+
+			function hideMe() {
+				document.getElementById("me").style.display = "none";
+			}
+
+			function showMe() {
+				document.getElementById("me").style.display = "";
+			}
+
+			function surpriseMe() {
+				
+				for (var i = 0; i<10; i++) {
+					document.getElementsByClassName("surprise")[i].style.fontSize = "20px";
+				}
+				
+			}
+
+			function addBorder() {
+				document.getElementById("carimage").style.border = "10px solid red";
+			}
+
+			function removeBorder() {
+				document.getElementById("carimage").style.border = "none";
+			}
+
+			function pageAlert(value) {
+				alert(value);
+
+				changeImage(value);
+				
+			}
+
+			
+
+			function changeImage(value) {
+				if (value == "Audi") {
+					document.getElementById("carimage").src = "https://moottori.fi/wp-content/uploads/2019/09/audietrongt.jpg";
+				}
+
+				if (value == "BMW") {
+					document.getElementById("carimage").src = "https://www.bmw.fi/content/dam/bmw/marketNORDICS/common/Campaigns/2020/Varfor-BMW/BMW_Stage_teaser_8_Series_Gran_Coupe_v2_1680x756.jpg/jcr:content/renditions/cq5dam.resized.img.1680.large.time1624890133465.jpg";
+				}
+
+				if (value == "Mercedes") {
+					document.getElementById("carimage").src = "https://www.mercedes-benz.fi/passengercars/content-pool/marketing-pool/product-page-stages/gle-coupe-c167-stage/_jcr_content/par/stageelement.MQ6.0.2x.stage.20211104141835.jpeg";
+				}
+
+				if (value == "Volvo") {
+					document.getElementById("carimage").src = "https://moottori.fi/wp-content/uploads/2022/03/Volvo_XC60_-T8_AWD_LongRange_HighPerformance_0359_HP_2022.jpg";
+				}
+			}
+
+			function changePosition() {
+				document.getElementById("carimage").style.left = "-200px";
+				document.getElementById("carimage").style.top = "500px";
+			}
+
+			var pos = 0;
+
+			function doMove() {
+				pos += 50;
+				document.getElementById("carimage").style.left = pos + "px";
+
+				if (pos == 200) {
+					pos = pos - 200;
+					
+				}
+			}
+
+			function fadeOut() {
+				document.getElementById("carimage").style.opacity -= "0.005";
+			}
+					
+
+			function remove() {
+				document.getElementById("carimage").parentNode.removeChild(document.getElementById("carimage"));
+			}
+
+			function insertRows() {
+				var table = document.getElementById("data");
+				var field1 = document.getElementById("textfield").value;
+				var field2 = document.getElementById("textfield2").value;
+				var field3 = document.getElementById("textfield3").value;
+
+				var rowCount = table.rows.length;
+
+				var row = table.insertRow(rowCount);
+				row.insertCell(0).innerHTML = field1;
+				row.insertCell(1).innerHTML = field2;
+				row.insertCell(2).innerHTML = field3;
+
+  
+			}
+
+		</script>
+
 	</body>
 </html>
 
