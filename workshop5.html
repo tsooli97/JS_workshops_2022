@@ -16,17 +16,30 @@
         <p data-line="6">a) Write JavaScript code which   checks the input fields when the form submit-button is clicked. Display the   entered values with alert -dialogs. Use onsubmit-event on the form tag. Make sure that your code cancels the submission of the form if needed. Hint: See the PowerPoint -slides.</p>
         <p data-line="8">b) Enhance the code and write   if-statements to check the following: the length of email address should be atleast 6 and   less than 15. It should also have a  @ - character. Check also that the comment field is not be empty and the content should be trimmed down to 50 characters. Utilize JavaScript <a href="http://www.w3schools.com/js/js_string_methods.asp" target="_blank">String-methods</a>.</p>
         <p data-line="12">c) Should an error occur,   highlight the erroneous field and provide some feedback to the user.   Preferably by displaying some text message on the page, next to the   input field. See the lecture slides for demo.</p>
-        <form onsubmit="">
-            <div class="no-border">
-                <label>Email address:<br>
-                    <input type="text" name="email">
+        <form name = "myForm" action ="#" onsubmit="return validateForm()">
+            
+            <div id ="emaildiv" class="no-border>
+                <label for="type">Contact type</label> 
+                <select name="type" id="contacttype" size="1" required>
+                    <option value="Email">Email</option>
+                    <option value="Phone">Phone</option>
+                    <option value="SMS">SMS</option>
+                </select>
+                <span id="feedbackfield"></span>
+                <label id="emaillabel"style="display:block"><br>Email address:<br>
+                    <input id ="secretemail" type="text" name="email" >
                 </label>
+                <label id="phonelabel"style="display:none"><br>Phone number:<br>
+                    <input id ="secretphone" type="text" name="phonelabel" >
+                </label>
+                
             </div>
             <div class="no-border">
                 <label>
                     Comment:<br>
                 </label>
-                <textarea name="comment"></textarea>
+                <textarea id = "commentfield" name="comment"></textarea>
+                <span id="commentfeedback"></span>
             </div>
             <br>
             <input type="submit" value="Send">
@@ -39,13 +52,13 @@
         <p data-line="20">a)  the Costs-field should display the total costs of the subscription</p>
         <p data-line="22">b) If the user chooses to pay   for more than 2 years, he will get a 20% discount. Notify the user when   he is eligible to get the discount, by showing a text next to form.</p>
         <p data-line="24">c) Should he pay for 5 years or   more, he will get the normal 20% discount, but will also be given an   extra 5€ discount with a special greetings text on screen.</p>
-        <form action="#" method="post" id="theForm">
+        <form action="#" method="post" id="theForm" onsubmit="return calculateMembership()">
             <fieldset>
                 <legend>Create Your Membership</legend>
                 <p>Complete this form to calculate your membership. There's a 20% discount if you enroll for more than one year!</p>
                 <div>
                     <label for="type">Type</label> 
-                    <select name="type" id="type" size="4" required>
+                    <select name="type" id="type" size="1" required>
                         <option value="basic">Basic - $10.00</option>
                         <option value="premium">Premium - $15.00</option>
                         <option value="gold">Gold - $20.00</option>
@@ -55,12 +68,14 @@
                 <div>
                     <label for="years">Years</label>
                     <input type="number" name="years" id="years" min="1" required>
+                    <span id = "discountinfo"></span>
                 </div>
                 <div>
                     <label for="cost">Cost</label>
                     <input type="text" name="cost" id="cost" disabled>
                 </div>
                 <input type="submit" value="Calculate" id="submit">
+                <p id ="specialmessage"></p>
           </fieldset>
         </form>
             
@@ -92,12 +107,17 @@
                 <input type="text" name="discount" id="discount" value="0.00" required>
             </div>
             <div>
+                <label for="shipping">Shipping</label>
+                <input type="text" name="shipping" id="shipping" value="0.00" required>
+            </div>
+            <div>
                 <label for="total">Total</label>
                 <input type="text" name="total" id="total" value="0.00">
             </div>
             <div>
                 <input type="submit" value="Calculate" id="submit-calculate" onClick="calculate()">
             </div>
+            
         </fieldset>
 
         <hr/>
@@ -108,6 +128,121 @@
                 <p data-line="41">After choosing the box, the user is shown an   input field which asks detailed information regarding on the selected   contact method.</p>
           </li>
         </ul>
-        <script src="js/shopping.js"></script>
+        <script src="js/shopping.js">
+
+
+           
+
+            
+
+
+        </script>
+
+        <script>
+
+            document.getElementById("contacttype").onchange = function(){changeContact()};
+
+
+            function changeContact() {
+                var x = document.getElementById("contacttype").value;
+
+                if (x == "Phone" || x == "SMS") {
+                    document.getElementById("emaillabel").style.display = "none";
+                    document.getElementById("phonelabel").style.display = "";
+                } 
+
+                if (x == "Email") {
+                    
+                    document.getElementById("phonelabel").style.display = "none";
+                    document.getElementById("emaillabel").style.display = "";
+                }
+
+                
+
+            }
+
+
+            function validateForm() {
+                var tally = 0;
+                var x = document.getElementById("secretemail").value;
+                var z = document.getElementById("contacttype").value;
+
+                var y = document.getElementById("commentfield").value;
+                var shortY = y.substring(0,50); 
+
+                if (z == "Email" ) {
+
+                    if ((x.length > 6 || x.length < 15) || x.includes("@")) {
+                        tally++;
+                    } else {
+                        document.forms.myForm.email.style.borderColor = "red";
+                    document.getElementById("feedbackfield").innerHTML = "Enter a valid email!";
+
+                    return false;
+                    }
+                    
+                    
+                } else if (y.length < 1) {
+                    document.forms.myForm.comment.style.borderColor = "red";
+                    document.getElementById("commentfeedback").innerHTML = "Enter a comment!";
+                    return false;
+
+                } else {
+                    alert("Email: " + x + " Comment: " + y);
+                    return true;
+                }
+
+             
+                                  
+                
+            }
+
+            document.getElementById("years").onchange = function(){checkForDiscount()};
+
+            function calculateMembership() {
+                var pricing = 0;
+                var x = document.getElementById("type").value;
+                var y = document.getElementById("price");
+                var z = document.getElementById("years").value;
+                
+
+                if (x == "basic") {
+                    pricing += 10;
+                } else if (x == "premium") {
+                    pricing += 15;
+                } else if (x == "gold") {
+                    pricing += 20;
+                } else if (x == "platinum") {
+                    pricing += 25;
+                }
+
+                if (z > 4) {
+                    pricing = pricing * z * 0.8 - 5;
+                    document.getElementById("specialmessage").innerHTML = "<b>Special discount for 5 year+ memberships!</b>";
+                } else if (z < 5 && z > 1) {
+                    pricing = pricing * z * 0.8;
+                    document.getElementById("specialmessage").innerHTML = "";
+                }   
+
+                document.getElementById("cost").value = pricing;
+
+
+            }
+
+            function checkForDiscount () {
+                var z = document.getElementById("years").value;
+
+                if (z > 1) {
+                    document.getElementById("discountinfo").innerHTML = "Eligible for a 20% discount!";
+                } else if (z == 1) {
+                    document.getElementById("discountinfo").innerHTML = "";
+                }
+
+                
+            }
+
+            
+            
+        </script>
     </body>
 </html>

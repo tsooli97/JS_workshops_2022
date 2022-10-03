@@ -35,14 +35,19 @@ function calculate() {
 
     // Factor in the discount:
 	if (quantity > 100){
-		total = total - (2*discount);
-	} else {
-		
-		total = total - discount;
-	}
-	total = total + (1.0*shipping);
+		discount = discount * 2;
+	} 
+
+    var discountformula = (100-discount)/100;
+
+    total = total * discountformula;
+	//total = total + (1.0*shipping);
     console.log("total after discount: " + total);
 
+
+    
+    total = total + parseInt(shipping);
+    
     // Format the total to two decimal places:
     total = total.toFixed(2);
 
